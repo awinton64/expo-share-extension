@@ -1,39 +1,41 @@
-import { useCallback } from "react"
-import { Alert, Button, StyleSheet, Text, View } from "react-native"
+import { close, type InitialProps } from "expo-share-extension"
+import { Button, StyleSheet, Text, View } from "react-native"
 import { useMMKVString } from "react-native-mmkv"
-import { useAuth } from '../components/auth/AuthProvider'
 import { storage } from "../lib/storage"
 
-export default function MainApp() {
+export default function ShareExtension({ url, text }: InitialProps) {
   const [shared] = useMMKVString("shared")
-  const [sharedUrl] = useMMKVString("shared_url")
-  const { signOut, user } = useAuth()
 
-  const enterText = useCallback(() => {
-    Alert.prompt(
-      "Enter persisted value",
-      "This value will be stored in MMKV",
-      (text) => {
-        storage.set("shared", text)
-      },
-    )
-  }, [])
+  // Store URL when it's received
+  if (url) {
+    storage.set("shared_url", url)
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>
-        Welcome {user?.email}
+        With MMKV Example
       </Text>
       <Text style={styles.text}>
         Persisted value: {shared}
       </Text>
-      {sharedUrl && (
+      {url && (
         <Text style={styles.text}>
-          Shared URL: {sharedUrl}
+          URL: {url}
         </Text>
       )}
-      <Button title="Enter persisted value" onPress={enterText} />
-      <Button title="Sign Out" onPress={signOut} />
+      {text && (
+        <Text style={styles.text}>
+          Text: {text}
+        </Text>
+      )}
+      <Button
+        title="Update persisted value"
+        onPress={() => {
+          storage.set("shared", "Hi from share extension")
+        }}
+      />
+      <Button title="Close" onPress={close} />
     </View>
   )
 }
@@ -41,6 +43,7 @@ export default function MainApp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    borderRadius: 20,
     backgroundColor: "#FAF8F5",
     alignItems: "center",
     justifyContent: "center",
@@ -57,4 +60,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 10,
   },
-}) 
+})
