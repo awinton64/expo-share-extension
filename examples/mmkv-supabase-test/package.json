@@ -12,16 +12,19 @@
     "prebuild": "expo prebuild -p ios --clean"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.46.1",
     "expo": "~51.0.38",
     "expo-dev-client": "~4.0.28",
     "expo-splash-screen": "~0.27.6",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
     "react-native": "0.74.5",
-    "react-native-mmkv": "^2.10.1"
+    "react-native-mmkv": "^2.12.2",
+    "react-native-url-polyfill": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.9",
+    "@types/node": "^22.9.0",
     "@types/react": "~18.2.79",
     "typescript": "~5.3.3"
   },
