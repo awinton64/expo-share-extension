@@ -12,6 +12,8 @@
     "prebuild": "expo prebuild -p ios --clean"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.1.0",
+    "@supabase/supabase-js": "^2.46.1",
     "expo": "~51.0.38",
     "expo-dev-client": "~4.0.28",
     "expo-splash-screen": "~0.27.6",

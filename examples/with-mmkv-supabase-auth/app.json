@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "with-mmkv",
-    "slug": "with-mmkv",
+    "name": "with-mmkv-supabase-auth",
+    "slug": "with-mmkv-supabase-auth",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,14 +14,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.shareextension.withmmkv"
+      "bundleIdentifier": "expo.modules.shareextension.withmmkvsupabaseauth"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "expo.modules.shareextension.withmmkv"
+      "package": "expo.modules.shareextension.withmmkvsupabaseauth"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -45,6 +45,27 @@
           "height": 500
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "build": {
+          "experimental": {
+            "ios": {
+              "appExtensions": [
+                {
+                  "targetName": "withmmkvsupabaseauthShareExtension",
+                  "bundleIdentifier": "expo.modules.shareextension.withmmkvsupabaseauth.ShareExtension",
+                  "entitlements": {
+                    "com.apple.security.application-groups": [
+                      "group.expo.modules.shareextension.withmmkvsupabaseauth"
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
   }
 }
