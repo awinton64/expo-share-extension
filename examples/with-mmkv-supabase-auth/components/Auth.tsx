@@ -4,21 +4,37 @@ import { supabase } from '../lib/supabase';
 
 export function Auth() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function signInWithEmail() {
+    console.log('Starting auth flow...');
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
-      options: {
-        emailRedirectTo: 'expo.modules.shareextension.withmmkvsupabaseauth://'
-      }
+      password,
+    });
+    console.log('Auth response:', error ? 'Error' : 'Success');
+
+    if (error) {
+      Alert.alert('Error', error.message);
+    } else {
+      Alert.alert('Success', 'Logged in successfully!');
+    }
+    setLoading(false);
+  }
+
+  async function signUpWithEmail() {
+    setLoading(true);
+    const { error } = await supabase.auth.signUp({
+      email,
+      password,
     });
 
     if (error) {
       Alert.alert('Error', error.message);
     } else {
-      Alert.alert('Success', 'Check your email for the login link!');
+      Alert.alert('Success', 'Signed up successfully!');
     }
     setLoading(false);
   }
@@ -32,11 +48,26 @@ export function Auth() {
         autoCapitalize="none"
         onChangeText={setEmail}
       />
-      <Button
-        title={loading ? "Loading..." : "Sign in"}
-        onPress={signInWithEmail}
-        disabled={loading}
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        secureTextEntry
+        autoCapitalize="none"
+        onChangeText={setPassword}
       />
+      <View style={styles.buttonContainer}>
+        <Button
+          title={loading ? "Loading..." : "Sign in"}
+          onPress={signInWithEmail}
+          disabled={loading}
+        />
+        <Button
+          title={loading ? "Loading..." : "Sign up"}
+          onPress={signUpWithEmail}
+          disabled={loading}
+        />
+      </View>
     </View>
   );
 }
@@ -52,4 +83,9 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
   },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+  }
 }); 
