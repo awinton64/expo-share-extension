@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "with-mmkv",
-    "slug": "with-mmkv",
+    "name": "MyMap",
+    "slug": "mymap",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,14 +14,14 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "expo.modules.shareextension.withmmkv"
+      "bundleIdentifier": "com.mymap.app"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "expo.modules.shareextension.withmmkv"
+      "package": "com.mymap.app"
     },
     "web": {
       "favicon": "./assets/favicon.png"
