@@ -1,15 +1,24 @@
 import { useCallback, useEffect } from "react";
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import { AppState, Alert, Button, StyleSheet, Text, View } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 
 import { storage } from "./storage";
 
 export default function App() {
-  const [shared] = useMMKVString("shared");
+  const [shared, setShared] = useMMKVString("shared");
 
   useEffect(() => {
-    console.log('Main App - Shared value changed:', shared);
-  }, [shared]);
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        // Force refresh of the MMKV value when app becomes active
+        setShared(storage.getString('shared'));
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, [setShared]);
 
   const enterText = useCallback(() => {
     Alert.prompt(
