@@ -1,11 +1,16 @@
 import { close, type InitialProps } from "expo-share-extension";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
+import { useEffect } from "react";
 
 import { storage } from "./storage";
 
 export default function ShareExtension({ url, text }: InitialProps) {
   const [shared] = useMMKVString("shared");
+
+  useEffect(() => {
+    console.log('Share Extension - Shared value changed:', shared);
+  }, [shared]);
 
   return (
     <View style={styles.container}>

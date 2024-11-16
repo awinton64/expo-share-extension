@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Alert, Button, StyleSheet, Text, View } from "react-native";
 import { useMMKVString } from "react-native-mmkv";
 
@@ -6,6 +6,10 @@ import { storage } from "./storage";
 
 export default function App() {
   const [shared] = useMMKVString("shared");
+
+  useEffect(() => {
+    console.log('Main App - Shared value changed:', shared);
+  }, [shared]);
 
   const enterText = useCallback(() => {
     Alert.prompt(
