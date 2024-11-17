@@ -1,10 +1,9 @@
-import { Text, View } from "react-native"
+import { Redirect } from 'expo-router'
+import { useAuth } from '../components/auth/AuthProvider'
 
-export default function App() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Hello</Text>
-    </View>
-  )
+export default function Index() {
+  const { user, loading } = useAuth()
+  
+  if (loading) return null
+  return <Redirect href={user ? "/(app)/" : "/(auth)/"} />
 }
-

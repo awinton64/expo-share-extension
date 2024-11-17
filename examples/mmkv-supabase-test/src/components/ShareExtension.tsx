@@ -7,7 +7,7 @@ export default function ShareExtension({ url }: InitialProps) {
   const handleOpenHostApp = useCallback(() => {
     if (url) {
       storage.set("shared_url", url);
-      openHostApp(`/test?url=${url}`);
+      openHostApp(`/(app)/test?url=${url}`);
     }
   }, [url]);
 

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native"
 import { useLocalSearchParams } from "expo-router"
-import { storage } from "../lib/storage"
+import { storage } from "../../lib/storage"
 
 export default function Test() {
   const { url } = useLocalSearchParams();

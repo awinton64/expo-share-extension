@@ -12,7 +12,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   })
 
   useEffect(() => {
+    console.log('AuthProvider - Current State:', state)
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('AuthProvider - Got Session:', session)
       setState(prev => ({
         ...prev,
         session,
@@ -23,17 +26,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (_event, session) => {
+        console.log('Auth state changed:', session?.user)
         setState(prev => ({
           ...prev,
           session,
           user: session?.user ?? null,
+          loading: false,
         }))
       }
     )
 
-    return () => {
-      subscription.unsubscribe()
-    }
+    return () => subscription.unsubscribe()
   }, [])
 
   const signIn = async (email: string, password: string) => {

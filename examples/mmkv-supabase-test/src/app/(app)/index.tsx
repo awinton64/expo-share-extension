@@ -1,8 +1,8 @@
 import { Button, StyleSheet, Text, View } from "react-native"
 import { useMMKVString } from "react-native-mmkv"
-import { useAuth } from '../components/auth/AuthProvider'
+import { useAuth } from '../../components/auth/AuthProvider'
 
-export default function MainApp() {
+export default function Index() {
   const [sharedUrl] = useMMKVString("shared_url")
   const { signOut, user } = useAuth()
 
@@ -22,22 +22,22 @@ export default function MainApp() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FAF8F5",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: 30,
-  },
-  title: {
-    fontFamily: "Inter-Black",
-    fontSize: 24,
-    marginBottom: 10,
-  },
-  text: {
-    textAlign: "center",
-    color: "#313639",
-    fontSize: 16,
-    marginBottom: 10,
-  },
-})
+    container: {
+      flex: 1,
+      backgroundColor: "#FAF8F5",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 30,
+    },
+    title: {
+      fontFamily: "Inter-Black",
+      fontSize: 24,
+      marginBottom: 10,
+    },
+    text: {
+      textAlign: "center",
+      color: "#313639",
+      fontSize: 16,
+      marginBottom: 10,
+    },
+  })
