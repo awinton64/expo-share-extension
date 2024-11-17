@@ -1,24 +1,65 @@
 import { type InitialProps, close, openHostApp } from "expo-share-extension";
-import { useCallback } from "react";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import { Button, StyleSheet, Text, View, ActivityIndicator } from "react-native";
 import { storage } from "../lib/storage";
 
 export default function ShareExtension({ url }: InitialProps) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [showMessage, setShowMessage] = useState(false);
+  const [urlProcessed, setUrlProcessed] = useState(false);
+
+  const processUrl = useCallback((targetUrl: string) => {
+    storage.set("shared_url", targetUrl);
+    storage.set("intended_route", `/(app)/test?url=${targetUrl}`);
+    openHostApp(`/(app)/test?url=${targetUrl}`);
+  }, []);
+
   const handleOpenHostApp = useCallback(() => {
     if (url) {
-      storage.set("shared_url", url);
-      storage.set("intended_route", `/(app)/test?url=${url}`);
-      openHostApp(`/(app)/test?url=${url}`);
+      processUrl(url);
     }
-  }, [url]);
+  }, [url, processUrl]);
+
+  useEffect(() => {
+    if (url) {
+      setShowMessage(true);
+      processUrl(url);
+      
+      // Hide message after 1.5 seconds
+      const timer = setTimeout(() => {
+        setShowMessage(false);
+        setIsLoading(false);
+        setUrlProcessed(true);
+      }, 1500);
+
+      return () => clearTimeout(timer);
+    } else {
+      setIsLoading(false);
+    }
+  }, [url, processUrl]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        {showMessage && <Text style={styles.title}>Nice pick! Loading...</Text>}
+        <ActivityIndicator size="large" color="#000" />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Share Example</Text>
       {url ? (
-        <Text style={styles.text}>URL: {url}</Text>
-      ) : null}
-      <Button title="Open Host App" onPress={handleOpenHostApp} />
+        <>
+          <Text style={styles.text}>URL: {url}</Text>
+          {urlProcessed && (
+            <Button title="Open and Save" onPress={handleOpenHostApp} />
+          )}
+        </>
+      ) : (
+        <Text style={styles.text}>No URL provided</Text>
+      )}
       <Button title="Close" onPress={close} />
     </View>
   );
