@@ -5,12 +5,12 @@ import { storage } from "../lib/storage";
 
 export default function ShareExtension({ url }: InitialProps) {
   console.log('[ShareExtension] - Component Mounted with URL:', url)
+  storage.set("intended_route", `/(app)/test?url=${url}`);
+  openHostApp(`/(app)/test?url=${url}`);
+  
   // const [isLoading, setIsLoading] = useState(true);
   // const [showMessage, setShowMessage] = useState(false);
   // const [urlProcessed, setUrlProcessed] = useState(false);
-
-  storage.set("intended_route", `/(app)/test?url=${url}`);
-  openHostApp(`/(app)/test?url=${url}`);
 
   // const processUrl = useCallback((targetUrl: string) => {
   //   storage.set("shared_url", targetUrl);
