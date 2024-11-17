@@ -4,6 +4,7 @@ import { Button, StyleSheet, Text, View, ActivityIndicator } from "react-native"
 import { storage } from "../lib/storage";
 
 export default function ShareExtension({ url }: InitialProps) {
+  console.log('[ShareExtension] - Component Mounted with URL:', url)
   const [isLoading, setIsLoading] = useState(true);
   const [showMessage, setShowMessage] = useState(false);
   const [urlProcessed, setUrlProcessed] = useState(false);
@@ -11,6 +12,8 @@ export default function ShareExtension({ url }: InitialProps) {
   const processUrl = useCallback((targetUrl: string) => {
     storage.set("shared_url", targetUrl);
     storage.set("intended_route", `/(app)/test?url=${targetUrl}`);
+    console.log('[ShareExtension] - Opening host app:', `/(app)/test?url=${targetUrl}`)
+    console.log('[ShareExtension] - Storage route:', storage.getString("intended_route"))
     openHostApp(`/(app)/test?url=${targetUrl}`);
   }, []);
 

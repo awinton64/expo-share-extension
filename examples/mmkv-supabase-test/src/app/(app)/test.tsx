@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from "react-native"
 import { useLocalSearchParams } from "expo-router"
 import { storage } from "../../lib/storage"
-import BottomSheet from "@gorhom/bottom-sheet"
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useState } from "react"
 import { useAuth } from "../../components/auth/AuthProvider"
 import { supabase } from "../../config/supabase"
 
@@ -11,10 +10,6 @@ export default function Test() {
   const { user } = useAuth()
   const [notes, setNotes] = useState("")
   const [isSaving, setIsSaving] = useState(false)
-  
-  // Bottom sheet setup
-  const bottomSheetRef = useRef<BottomSheet>(null)
-  const snapPoints = useMemo(() => ["25%", "50%", "90%"], [])
 
   const handleSave = async () => {
     if (!user) return
@@ -36,8 +31,6 @@ export default function Test() {
       
       // Clear the form
       setNotes("")
-      // Optional: close the bottom sheet
-      bottomSheetRef.current?.close()
       
     } catch (error) {
       console.error("Error saving content:", error)
@@ -47,12 +40,7 @@ export default function Test() {
   }
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={1}
-      snapPoints={snapPoints}
-      enablePanDownToClose={false}
-    >
+    <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Text style={styles.title}>Save Content</Text>
         
@@ -84,14 +72,19 @@ export default function Test() {
           </Text>
         </TouchableOpacity>
       </View>
-    </BottomSheet>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FAF8F5',
+  },
   contentContainer: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white',
   },
   title: {
     fontSize: 24,
