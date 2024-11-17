@@ -2,6 +2,7 @@
   "expo": {
     "name": "MyMap",
     "slug": "mymap",
+    "scheme": "my-map-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,7 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mymap.app"
@@ -30,7 +33,9 @@
       [
         "expo-font",
         {
-          "fonts": ["./assets/fonts/Inter-Black.otf"]
+          "fonts": [
+            "./assets/fonts/Inter-Black.otf"
+          ]
         }
       ],
       [
@@ -40,11 +45,12 @@
             "red": 255,
             "green": 255,
             "blue": 255,
-            "alpha": 0 // make the background transparent
+            "alpha": 0
           },
           "height": 500
         }
-      ]
+      ],
+      "expo-router"
     ]
   }
 }
