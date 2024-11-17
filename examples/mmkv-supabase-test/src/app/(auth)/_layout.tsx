@@ -7,11 +7,10 @@ export default function AuthLayout() {
 
   if (loading) return null
   if (user) {
-    const intendedRoute = storage.getString("intended_route")
-    if (intendedRoute) {
-      storage.delete("intended_route") // Clear it after use
-      return <Redirect href={intendedRoute} />
-    }
+    // const intendedRoute = storage.getString("intended_route")
+    // if (intendedRoute) {
+    //   storage.delete("intended_route") // Clear it after use
+    //   return <Redirect href={intendedRoute} />
     return <Redirect href="/(app)/" />
   }
 

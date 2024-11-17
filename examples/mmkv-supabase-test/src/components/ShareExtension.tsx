@@ -4,9 +4,37 @@ import { Button, StyleSheet, Text, View, ActivityIndicator } from "react-native"
 import { storage } from "../lib/storage";
 
 export default function ShareExtension({ url }: InitialProps) {
-  console.log('[ShareExtension] - Component Mounted with URL:', url)
-  storage.set("intended_route", `/(app)/test?url=${url}`);
-  openHostApp(`/(app)/test?url=${url}`);
+  const [isReady, setIsReady] = useState(false);
+
+  // First mount effect
+  useEffect(() => {
+    console.log('[ShareExtension] - Component Mounted with URL:', url);
+    setIsReady(true);
+  }, []);
+
+  // Handle URL effect
+  useEffect(() => {
+    if (!isReady || !url) return;
+    
+    console.log('[ShareExtension] - Processing URL:', url);
+    
+    // Set storage first
+    storage.set("intended_route", `/(app)/test?url=${url}`);
+    storage.set("shared_url", url);
+    
+    // Use setTimeout to ensure storage is set before opening host app
+    setTimeout(() => {
+      console.log('[ShareExtension] - Opening host app');
+      openHostApp(`/(app)/test?url=${url}`);
+    }, 100);
+  }, [isReady, url]);
+
+  return (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#000" />
+    </View>
+  );
+}
   
   // const [isLoading, setIsLoading] = useState(true);
   // const [showMessage, setShowMessage] = useState(false);
@@ -53,7 +81,7 @@ export default function ShareExtension({ url }: InitialProps) {
   //   );
   // }
 
-  return 
+  // return 
   // (
   //   <View style={styles.container}>
   //     <Text style={styles.title}>Share Example</Text>
@@ -70,7 +98,7 @@ export default function ShareExtension({ url }: InitialProps) {
   //     <Button title="Close" onPress={close} />
   //   </View>
   // );
-}
+// }
 
 const styles = StyleSheet.create({
   container: {
