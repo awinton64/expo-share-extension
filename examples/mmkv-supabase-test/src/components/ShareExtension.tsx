@@ -25,7 +25,7 @@ export default function ShareExtension({ url }: InitialProps) {
     // Use setTimeout to ensure storage is set before opening host app
     setTimeout(() => {
       console.log('[ShareExtension] - Opening host app');
-      openHostApp(`/(app)/test?url=${url}`);
+      openHostApp(`my-map-app:///(app)/test?url=${url}`);
     }, 100);
   }, [isReady, url]);
 
